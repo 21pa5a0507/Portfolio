@@ -1,0 +1,46 @@
+## Overview
+
+HexPilot is a personal GenAI research project: a shipped knowledge platform for document retrieval, knowledge assistance, and workflow automation. It brings together a FastAPI backend, a React frontend, agent workflows, and retrieval engineering.
+
+This project is separate from my professional engineering work at Hexnode. Its source repository is private.
+
+## Problem
+
+The platform addresses questions across multiple sources and supports document-based knowledge assistance. Its scope also includes workflow automation and device information retrieval through agent tools.
+
+## My responsibilities
+
+I built and shipped the platform across backend development, frontend integration, retrieval, agent workflows, containerization, and deployment.
+
+- Developed the application using FastAPI, React, LangChain, and LangGraph.
+- Implemented hybrid retrieval, reranking, embeddings, and source-aware retrieval routing.
+- Integrated MCP with PostgreSQL-backed tools and device information retrieval through agent tools.
+- Containerized the application with Docker and deployed it on Google Cloud Run.
+
+## Architecture overview
+
+The platform combines retrieval, agent orchestration, and tool access. The following map groups the implemented capabilities; it does not specify a mandatory order for every question or tool call.
+
+<ArchitectureDiagram kind="hexpilot" />
+
+## Technical implementation
+
+### Hybrid retrieval and reranking
+
+HexPilot combines BM25 and vector search for hybrid retrieval, with FAISS as part of the vector retrieval stack. BM25 provides lexical matching, while vector search retrieves by embedding similarity. Cross-encoder reranking is included to refine retrieved candidates.
+
+The implementation also includes ONNX-based embeddings and source-aware retrieval routing for multi-source contextual question answering.
+
+### Agent workflows and tools
+
+LangGraph and ReAct agent workflows support knowledge assistance and workflow automation. LangChain is part of the application stack. MCP integration connects PostgreSQL-backed tools, and agent tools support device information retrieval.
+
+### Application and deployment
+
+FastAPI provides the backend application framework, and React provides the frontend. The application is containerized with Docker and deployed to Google Cloud Run. ONNX Runtime is part of the embedding implementation.
+
+## Results
+
+Built and shipped a GenAI knowledge platform supporting document retrieval, multi-source contextual question answering, knowledge assistance, and workflow automation.
+
+The professional assistant's performance metrics are not attributed to this personal project.
