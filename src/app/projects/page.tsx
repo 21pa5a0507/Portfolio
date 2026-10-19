@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { projects } from '@/data/projects';
 import { ProjectCard } from '@/components/projects/project-card';
-import { canonicalUrl } from '@/lib/site';
+import { canonicalUrl, socialImages } from '@/lib/site';
 
 const description =
   'Engineering case studies by Kishore Kattiri: production enterprise software at Hexnode and independent GenAI research with HexPilot.';
@@ -16,6 +16,13 @@ export const metadata: Metadata = {
     description,
     type: 'website',
     url: canonicalUrl('/projects'),
+    images: socialImages(),
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Engineering projects — Kishore Kattiri',
+    description,
+    images: socialImages(),
   },
 };
 

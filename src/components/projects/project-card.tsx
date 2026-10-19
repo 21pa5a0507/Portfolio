@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { Project } from '@/lib/types';
 import { Tag } from '@/components/ui/tag';
 import { EngineeringDrawing } from '@/components/ui/engineering-drawing';
+import { ExternalLink } from '@/components/ui/external-link';
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
@@ -42,10 +43,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {(project.demoUrl || project.repositoryUrl) && (
           <div className="project-external-actions">
             {project.demoUrl && (
-              <a className="text-link" href={project.demoUrl}>
-                Live demo
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
+              <ExternalLink href={project.demoUrl}>Live Demo</ExternalLink>
             )}
             {project.repositoryUrl && (
               <a className="text-link" href={project.repositoryUrl}>

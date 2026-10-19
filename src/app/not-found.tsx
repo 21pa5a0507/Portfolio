@@ -1,4 +1,12 @@
 import { ActionLink } from '@/components/ui/action-link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Page not found',
+  description:
+    'The requested page could not be found. Return to Kishore Kattiri’s engineering portfolio.',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (

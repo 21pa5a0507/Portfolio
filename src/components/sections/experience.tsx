@@ -27,7 +27,7 @@ export function Experience() {
           </p>
           <p className="text-muted">
             Building an enterprise endpoint management product at Hexnode,
-            across backend systems, security, and intelligent applications.
+            across agentic AI, backend systems, device management, and security.
           </p>
         </div>
         <div className="timeline">

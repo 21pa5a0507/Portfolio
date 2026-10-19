@@ -3,12 +3,12 @@ import type { Project } from '@/lib/types';
 export const projects: readonly Project[] = [
   {
     slug: 'hexpilot',
-    title: 'HexPilot — Agentic GenAI RAG Platform',
-    category: 'Personal GenAI Research Project',
+    title: 'HexPilot — Agentic AI & Enterprise Workflow Automation',
+    category: 'Personal AI Engineering Project',
     context: 'personal',
     featured: true,
     description:
-      'A shipped GenAI knowledge platform for document retrieval, knowledge assistance, and workflow automation.',
+      'A personal AI engineering project combining hybrid document retrieval, LangGraph agent workflows, reranking, and MCP-enabled device data access in a FastAPI and React application.',
     technologies: [
       'FastAPI',
       'LangChain',
@@ -30,16 +30,17 @@ export const projects: readonly Project[] = [
       'Docker containerization',
     ],
     outcomes: ['Built and shipped a GenAI knowledge platform.'],
-    // Private repository: intentionally no repository URL. Add demoUrl when supplied.
+    demoUrl: 'https://ai-doc-copilot-iota.vercel.app/',
+    // Private repository: intentionally no repository URL.
   },
   {
     slug: 'enterprise-ai-assistant',
     title: 'Enterprise AI Assistant',
-    category: 'Professional Engineering Work — Hexnode',
+    category: 'Production AI Engineering — Hexnode',
     context: 'professional',
     featured: false,
     description:
-      'An enterprise knowledge retrieval and workflow-support assistant with Jira integration.',
+      'A professional case study covering retrieval optimization, agent orchestration, and enterprise tool integration, using generalized architecture without proprietary details.',
     technologies: ['LangChain', 'LangGraph', 'OpenAI APIs', 'FAISS', 'Qdrant'],
     implementation: [
       'End-to-end assistant development',
@@ -55,11 +56,11 @@ export const projects: readonly Project[] = [
   {
     slug: 'uem-compliance',
     title: 'Enterprise UEM and Compliance Engineering',
-    category: 'Professional Engineering Work — Hexnode',
+    category: 'Backend Engineering — Hexnode',
     context: 'professional',
     featured: false,
     description:
-      'Enterprise backend work across CIS compliance, Windows MDM configuration, and UEM product modules.',
+      'Production backend development involving Windows MDM, CIS compliance, and enterprise device management services.',
     technologies: [
       'Python',
       'Django',

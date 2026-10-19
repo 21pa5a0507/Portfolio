@@ -4,8 +4,11 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/projects';
 import { findProject, getProjectSections } from '@/lib/project-content';
-import { canonicalUrl } from '@/lib/site';
+import { canonicalUrl, socialImages } from '@/lib/site';
+import { projectData } from '@/lib/structured-data';
+import { StructuredData } from '@/components/ui/structured-data';
 import { Tag } from '@/components/ui/tag';
+import { ExternalLink } from '@/components/ui/external-link';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -29,6 +32,13 @@ export async function generateMetadata({
       description: project.description,
       type: 'article',
       url,
+      images: socialImages(),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description: project.description,
+      images: socialImages(),
     },
   };
 }
@@ -44,6 +54,7 @@ export default async function ProjectPage({ params }: PageProps) {
   );
   return (
     <main id="main" tabIndex={-1} className="container case-study">
+      <StructuredData data={projectData(project)} />
       <nav className="case-breadcrumb" aria-label="Breadcrumb">
         <Link href="/projects" className="back-link">
           <ArrowLeft size={15} aria-hidden="true" />
@@ -64,10 +75,9 @@ export default async function ProjectPage({ params }: PageProps) {
         {(project.demoUrl || project.repositoryUrl) && (
           <div className="project-external-actions">
             {project.demoUrl && (
-              <a className="action" href={project.demoUrl}>
-                Live demo
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
+              <ExternalLink href={project.demoUrl} className="action">
+                Live Demo
+              </ExternalLink>
             )}
             {project.repositoryUrl && (
               <a className="action" href={project.repositoryUrl}>

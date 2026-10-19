@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { profile } from '@/data/profile';
 import { themeInitScript } from '@/lib/theme';
+import { indexingEnabled, siteOrigin } from '@/lib/site';
 import '@/styles/globals.css';
 import '@/styles/home.css';
 
@@ -18,12 +19,15 @@ const mono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: `${profile.name} — Software Engineer`,
+    default: profile.seoTitle,
     template: `%s | ${profile.name}`,
   },
-  description: profile.summary,
+  description: profile.seoDescription,
   icons: { icon: '/favicon.svg' },
-  robots: { index: false, follow: false }, // Foundation preview; enable when full portfolio is ready.
+  metadataBase: siteOrigin(),
+  authors: [{ name: profile.name }],
+  twitter: { card: 'summary_large_image' },
+  robots: { index: indexingEnabled(), follow: indexingEnabled() },
 };
 
 export default function RootLayout({

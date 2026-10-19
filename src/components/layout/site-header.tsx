@@ -19,6 +19,23 @@ export function SiteHeader({ homePage = true }: { homePage?: boolean }) {
   const [activeSection, setActiveSection] = useState('home');
   const buttonRef = useRef<HTMLButtonElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const row = headerRef.current?.querySelector('.header-row');
+    if (!row) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        '--header-offset',
+        `${Math.max(96, Math.ceil(row.getBoundingClientRect().height) + 8)}px`,
+      );
+    });
+    observer.observe(row);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty('--header-offset');
+    };
+  }, []);
 
   useEffect(() => {
     if (!homePage || !('IntersectionObserver' in window)) return;
@@ -39,7 +56,11 @@ export function SiteHeader({ homePage = true }: { homePage?: boolean }) {
     const desktop = window.matchMedia('(min-width: 768px)');
     function onBreakpoint(event: MediaQueryListEvent) {
       setOpen(false);
-      const active = document.activeElement;
+      // Some engines blur display:none controls before delivering matchMedia events.
+      const active =
+        document.activeElement === document.body
+          ? lastFocusedRef.current
+          : document.activeElement;
       const hiddenNav = headerRef.current?.querySelector(
         event.matches ? '#mobile-navigation' : '.desktop-nav',
       );
@@ -99,23 +120,28 @@ export function SiteHeader({ homePage = true }: { homePage?: boolean }) {
     <header
       className="site-header"
       ref={headerRef}
+      onFocusCapture={(event) => {
+        lastFocusedRef.current = event.target as HTMLElement;
+      }}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
           setOpen(false);
+          if (event.relatedTarget) lastFocusedRef.current = null;
+        }
       }}
     >
       <div className="container header-row">
         <a
           className="wordmark"
           href={homePage ? '#home' : '/#home'}
-          aria-label={`${profile.name}, ${homePage ? 'back to top' : 'portfolio homepage'}`}
+          title={homePage ? 'Back to top' : 'Portfolio homepage'}
         >
           <span className="monogram" aria-hidden="true">
             k<span>.</span>
           </span>
           <span>
-            {profile.name}
-            <span className="wordmark-subtitle">Software Engineer</span>
+            {profile.name}{' '}
+            <span className="wordmark-subtitle">{profile.title}</span>
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">

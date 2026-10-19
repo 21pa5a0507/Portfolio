@@ -1,5 +1,6 @@
 import { profile } from '@/data/profile';
 import { SectionHeading } from '@/components/ui/section-heading';
+import { ProfilePhoto } from '@/components/ui/profile-photo';
 
 export function About() {
   return (
@@ -17,9 +18,12 @@ export function About() {
             title="Software, from end to end."
             id="about-title"
           />
+          <ProfilePhoto photo={profile.photo} />
           <p className="about-signature">
             {profile.name}
-            <span>Software Engineer · {profile.location}</span>
+            <span>
+              {profile.title} · {profile.location}
+            </span>
           </p>
         </div>
         <div className="about-copy">

@@ -8,6 +8,8 @@
 }
 .header-row {
   display: flex;
+  flex-wrap: wrap;
+  padding-block: 12px;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
@@ -40,6 +42,7 @@
 }
 .desktop-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: clamp(1rem, 2.3vw, 2rem);
 }
 .desktop-nav a {
@@ -85,7 +88,8 @@
   gap: 8px;
 }
 .header-controls .action {
-  padding: 0.6rem;
+  padding: 10px;
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
   background: transparent;
@@ -113,6 +117,7 @@
   padding-top: clamp(4rem, 7vw, 6.5rem);
 }
 .hero-copy {
+  min-width: 0;
   padding-bottom: 3.5rem;
 }
 .hero-kicker {
@@ -120,14 +125,17 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 2rem;
+  line-height: 1.8;
 }
 .accent-rule {
+  flex-shrink: 0;
   width: 25px;
   height: 1px;
   background: var(--accent);
 }
 .hero h1 {
-  font-size: clamp(2.8rem, 4.9vw, 4.2rem);
+  font-size: clamp(2.65rem, 4.5vw, 4rem);
+  text-wrap: balance;
   letter-spacing: -0.055em;
   line-height: 1.08;
   margin-bottom: 1.75rem;
@@ -135,10 +143,14 @@
 .hero-emphasis {
   color: var(--accent);
 }
+.hero-term {
+  display: inline-block;
+  max-width: 100%;
+}
 .hero-intro {
   font-size: 1.05rem;
   color: var(--muted);
-  max-width: 46ch;
+  max-width: 56ch;
 }
 .hero-actions {
   display: flex;
@@ -167,7 +179,7 @@
   color: var(--accent);
 }
 .hero-figure {
-  margin: 2.5rem 0 0;
+  margin: 0;
   align-self: center;
 }
 .figure-label {
@@ -307,7 +319,11 @@
   align-items: center;
   gap: 1rem;
 }
+.experience-card-heading > div {
+  min-width: 0;
+}
 .company-name {
+  overflow-wrap: anywhere;
   font-size: 2.35rem;
   letter-spacing: -0.05em;
   font-weight: 550;
@@ -328,6 +344,8 @@
   gap: 1.5rem;
 }
 .impact-metrics > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
   display: flex;
   flex-direction: column-reverse;
   justify-content: end;
@@ -350,6 +368,10 @@
   display: flex;
   gap: 1.2rem;
   padding-top: 1.8rem;
+}
+.experience-group > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .group-number {
   font-family: var(--font-geist-mono), monospace;
@@ -439,6 +461,7 @@
   margin-inline: auto;
 }
 .project-copy {
+  overflow-wrap: anywhere;
   padding: 1.8rem;
 }
 .project-copy > .eyebrow {
@@ -639,9 +662,14 @@
 }
 .achievement-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 2.5rem;
   padding-block: 1rem;
+}
+.achievement-row > div {
+  flex: 1 1 8rem;
+  min-width: 0;
 }
 .achievement-marker {
   color: var(--accent);
@@ -817,7 +845,7 @@ main[tabindex='-1']:focus {
     gap: 1rem;
   }
   .timeline-entry {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0;
   }
   .timeline-date {
@@ -879,7 +907,7 @@ main[tabindex='-1']:focus {
   .about-grid,
   .education-layout,
   .contact-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
   }
   .about-grid h2 {
@@ -918,26 +946,26 @@ main[tabindex='-1']:focus {
 }
 @media (max-width: 480px) {
   .impact-metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
     gap: 1.25rem;
   }
   .impact-metrics > div:first-child {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
     padding-bottom: 1.25rem;
     border-bottom: 1px solid var(--border);
   }
   .impact-metrics > div:first-child dd {
-    grid-column: 1;
-    grid-row: 1;
+    order: -1;
+    max-width: 100%;
     font-size: 2.3rem;
   }
   .impact-metrics > div:first-child dt {
-    grid-column: 2;
-    grid-row: 1;
+    flex: 1 1 6rem;
   }
 }
 @media (max-width: 400px) {
@@ -968,7 +996,7 @@ main[tabindex='-1']:focus {
     padding-inline: 0.8rem;
   }
   .experience-card {
-    padding: 1.1rem;
+    padding: 18px;
   }
   .impact-metrics dd {
     font-size: 2rem;

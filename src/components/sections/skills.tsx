@@ -1,4 +1,4 @@
-import { homepageSkillGroups, skills } from '@/data/skills';
+import { homepageSkillGroups } from '@/data/skills';
 import { SectionHeading } from '@/components/ui/section-heading';
 
 export function Skills() {
@@ -16,18 +16,11 @@ export function Skills() {
         id="skills-title"
       />
       <p className="section-lede">
-        A selection across backend development, product delivery, and practical
-        AI engineering.
+        AI engineering and retrieval, supported by backend development,
+        full-stack delivery, and cloud tooling.
       </p>
       <div className="skills-grid">
         {homepageSkillGroups.map((selection, index) => {
-          const group = skills.find(
-            (item) => item.category === selection.category,
-          );
-          const selected =
-            group?.items.filter((item) =>
-              (selection.selected as readonly string[]).includes(item),
-            ) ?? [];
           return (
             <div className="skill-group" key={selection.category}>
               <span className="group-number" aria-hidden="true">
@@ -35,7 +28,7 @@ export function Skills() {
               </span>
               <h3>{selection.category}</h3>
               <ul>
-                {selected.map((skill) => (
+                {selection.selected.map((skill) => (
                   <li key={skill}>{skill}</li>
                 ))}
               </ul>

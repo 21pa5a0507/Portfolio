@@ -11,6 +11,7 @@ export default defineConfig([
     'coverage/**',
     'playwright-report/**',
     'test-results/**',
+    'artifacts/**',
     'next-env.d.ts',
   ]),
 ]);

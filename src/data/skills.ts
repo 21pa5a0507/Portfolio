@@ -92,24 +92,14 @@ export const featuredSkills = [
   'LangGraph',
 ] as const;
 
-// Select from the full inventory above; no proficiency scores are implied.
+// Curated homepage groups draw only from the complete inventory above.
+type VerifiedSkill = (typeof skills)[number]['items'][number];
 export const homepageSkillGroups = [
   {
-    category: 'Programming and Backend',
+    category: 'AI Engineering',
     selected: [
-      'Python',
-      'Django',
-      'FastAPI',
-      'REST APIs',
-      'Microservices',
-      'SQL',
-    ],
-  },
-  {
-    category: 'AI, LLMs and Agents',
-    selected: [
-      'LangChain',
       'LangGraph',
+      'LangChain',
       'RAG',
       'ReAct Agents',
       'MCP',
@@ -117,27 +107,36 @@ export const homepageSkillGroups = [
     ],
   },
   {
-    category: 'Retrieval and AI Engineering',
+    category: 'Retrieval & Search',
     selected: [
-      'FAISS',
-      'Qdrant',
       'Hybrid Search',
       'BM25',
+      'FAISS',
+      'Qdrant',
       'Cross-Encoder Reranking',
       'ONNX Runtime',
     ],
   },
   {
-    category: 'Databases',
-    selected: ['PostgreSQL', 'SQLite', 'Vector Databases'],
+    category: 'Backend Engineering',
+    selected: [
+      'Python',
+      'FastAPI',
+      'Django',
+      'REST APIs',
+      'Microservices',
+      'SQL',
+    ],
   },
-  { category: 'Frontend', selected: ['React', 'JavaScript', 'HTML', 'CSS'] },
   {
-    category: 'Cloud and DevOps',
+    category: 'Frontend & Databases',
+    selected: ['React', 'JavaScript', 'HTML', 'CSS', 'PostgreSQL', 'SQLite'],
+  },
+  {
+    category: 'Cloud & DevOps',
     selected: ['Docker', 'Google Cloud Run', 'AWS Lambda', 'CI/CD', 'Git'],
   },
-  {
-    category: 'Testing and Tools',
-    selected: ['Unit Testing', 'BDD (Behave)', 'Jira'],
-  },
-] as const;
+] as const satisfies readonly {
+  category: string;
+  selected: readonly VerifiedSkill[];
+}[];

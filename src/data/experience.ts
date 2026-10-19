@@ -12,24 +12,24 @@ export const experience = [
     ],
     groups: [
       {
-        title: 'Backend and Enterprise Product Engineering',
-        details: [
-          'Delivered microservice modules for Unified Endpoint Management supporting 1,000+ managed devices in production.',
-        ],
-      },
-      {
-        title: 'Endpoint Management and Security',
-        details: [
-          'Built CIS compliance policies and automated scanning using Python, Django, REST APIs, and PostgreSQL, reducing unauthorized access risk by 25% based on internal CIS compliance benchmarks.',
-          'Implemented Windows MDM customizations with CSP and ADMX integrations, improving enterprise configuration management efficiency by 60%.',
-        ],
-      },
-      {
-        title: 'Agentic AI and Intelligent Systems',
+        title: 'Agentic AI & Enterprise Knowledge Systems',
         details: [
           'Led end-to-end development of an enterprise RAG assistant using LangChain, LangGraph ReAct agents, and OpenAI APIs, with knowledge retrieval and Jira integration.',
           'Reduced retrieval latency by 30% through custom chunking and hybrid vector search with FAISS and Qdrant, while improving response accuracy by 40%.',
           'Optimized AI inference workflows using ONNX Runtime and Docker and contributed technical guidance and knowledge sharing.',
+        ],
+      },
+      {
+        title: 'Backend & Enterprise Device Management',
+        details: [
+          'Built Python and Django services and microservice modules for Unified Endpoint Management supporting 1,000+ managed devices in production.',
+          'Implemented Windows MDM customizations with CSP and ADMX integrations, improving enterprise configuration management efficiency by 60%.',
+        ],
+      },
+      {
+        title: 'Compliance & Security Engineering',
+        details: [
+          'Built CIS compliance policies and automated scanning using Python, Django, REST APIs, and PostgreSQL, reducing unauthorized access risk by 25% based on internal CIS compliance benchmarks.',
         ],
       },
     ],

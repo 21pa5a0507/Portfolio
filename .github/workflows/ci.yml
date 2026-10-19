@@ -1,0 +1,64 @@
+name: Portfolio quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      SITE_INDEXING: 'false'
+      NEXT_PUBLIC_SITE_URL: ''
+      VERCEL_ENV: preview
+      PLAYWRIGHT_ALL_BROWSERS: '1'
+      PLAYWRIGHT_SKIP_BUILD: '1'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=low
+      - name: Record full audit including known development advisory
+        continue-on-error: true
+        run: |
+          mkdir -p artifacts/phase-6
+          npm audit --json > artifacts/phase-6/audit-full.json
+      - run: npm run validate:content
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run build
+      - name: Install browser engines and Linux dependencies
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Production build and browser regression including axe
+        run: npm run test:e2e -- --workers=1 --reporter=line,html
+      - name: Retain QA evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: portfolio-qa-${{ github.run_id }}
+          path: |
+            artifacts/
+            test-results/
+            playwright-report/
+          retention-days: 7
+          if-no-files-found: ignore

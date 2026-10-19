@@ -12,8 +12,32 @@ test('homepage keeps professional experience first and every link has a real des
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Building reliable software and intelligent systems.',
+    'Engineering AI-powered applications for real-world problems.',
   );
+  await expect(page).toHaveTitle('Kishore Kattiri | AI Software Engineer');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    'content',
+    profile.seoDescription,
+  );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    'content',
+    profile.seoTitle,
+  );
+  await expect(page.locator('.current-entry h3')).toHaveText(
+    'Software Engineer',
+  );
+  await expect(page.locator('.current-entry h4')).toHaveText([
+    'Agentic AI & Enterprise Knowledge Systems',
+    'Backend & Enterprise Device Management',
+    'Compliance & Security Engineering',
+  ]);
+  await expect(page.locator('#skills h3')).toHaveText([
+    'AI Engineering',
+    'Retrieval & Search',
+    'Backend Engineering',
+    'Frontend & Databases',
+    'Cloud & DevOps',
+  ]);
   expect(
     await page
       .locator('main > section')
@@ -64,7 +88,10 @@ test('homepage keeps professional experience first and every link has a real des
     profile.resumeUrl ? 1 : 0,
   );
   await expect(
-    page.getByRole('link', { name: 'Live demo', exact: true }),
+    page.getByRole('link', {
+      name: 'Live Demo (opens in a new tab)',
+      exact: true,
+    }),
   ).toHaveCount(projects.filter((project) => project.demoUrl).length);
   await expect(
     page.getByRole('link', { name: 'Source code', exact: true }),
@@ -244,7 +271,12 @@ test('theme follows the system, persists manual preference, and can return to sy
 
 test('keyboard skip link and project case-study links work', async ({
   page,
+  browserName,
 }) => {
+  test.skip(
+    browserName === 'webkit' && process.platform === 'win32',
+    'Windows WebKit skips native links during Tab navigation; verify the native skip-link Tab path on Safari with full keyboard navigation.',
+  );
   await page.goto('/');
   await page.keyboard.press('Tab');
   await expect(
@@ -269,6 +301,6 @@ test('missing routes return the custom 404', async ({ page }) => {
   ).toBeVisible();
   await page.getByRole('link', { name: 'Back to home' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Building reliable software and intelligent systems.',
+    'Engineering AI-powered applications for real-world problems.',
   );
 });

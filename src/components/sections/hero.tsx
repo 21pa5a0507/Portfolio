@@ -3,6 +3,7 @@ import { profile } from '@/data/profile';
 import { ActionLink } from '@/components/ui/action-link';
 import { EngineeringDrawing } from '@/components/ui/engineering-drawing';
 import { SocialLinks } from '@/components/layout/social-links';
+import { ExternalLink } from '@/components/ui/external-link';
 
 export function Hero() {
   return (
@@ -15,11 +16,13 @@ export function Hero() {
       <div className="hero-copy">
         <p className="eyebrow hero-kicker">
           <span className="accent-rule" />
-          Software Engineer / India
+          {profile.descriptor}
         </p>
         <h1 id="hero-title">
-          Building reliable software and{' '}
-          <span className="hero-emphasis">intelligent systems.</span>
+          Engineering AI-powered applications for{' '}
+          <span className="hero-emphasis">
+            <span className="hero-term">real-world</span> problems.
+          </span>
         </h1>
         <p className="hero-intro">{profile.introduction}</p>
         <div className="hero-actions">
@@ -32,7 +35,9 @@ export function Hero() {
             <ArrowUpRight size={16} aria-hidden="true" />
           </ActionLink>
           {profile.resumeUrl && (
-            <ActionLink href={profile.resumeUrl}>Download résumé</ActionLink>
+            <ExternalLink href={profile.resumeUrl} className="action">
+              View Resume
+            </ExternalLink>
           )}
         </div>
         <SocialLinks />
@@ -54,7 +59,7 @@ export function Hero() {
             Hexnode <ArrowUpRight size={13} aria-hidden="true" />
           </a>
         </span>
-        <span>Backend / Full-stack / Agentic AI</span>
+        <span>Agentic AI / Backend / Full-stack</span>
       </div>
     </section>
   );

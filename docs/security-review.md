@@ -1,6 +1,8 @@
-# Phase 2 dependency security review
+# Dependency security review
 
 Reviewed on 16 October 2026. No dependency upgrades, overrides, or forced fixes were applied in Phase 2.
+
+Rechecked on 19 October 2026 during Phase 5 after adding development-only axe and Lighthouse tools. The full audit still reports the same five high-severity entries below; the production-only audit reports zero vulnerabilities. `npm view braces version` still returns 3.0.3, and the primary advisory still lists no patched release. No forced fix, dependency downgrade, or override was applied. Raw current audit JSON is retained locally in `artifacts/phase-5/audit-full.json` and `audit-production.json`.
 
 ## Exact findings
 
@@ -28,7 +30,7 @@ The root advisory is [GHSA-vfj7-8cjw-p6xm / CVE-2026-93687](https://github.com/a
 
 ## Safe options
 
-1. **Current approach:** retain compatible pinned versions and document the finding. Keep glob configuration trusted and review lint/configuration changes. Re-run the audit during the quality milestone and before deployment.
+1. **Current approach:** retain compatible pinned versions and document the finding. Keep glob configuration trusted and review lint/configuration changes. Re-run the audit before deployment and when upstream publishes a patch.
 2. When an upstream patch is published, update the affected lint chain within compatible version ranges, refresh the lockfile, and run type, lint, build, and browser checks. A narrow transitive override is an option only after a patched release exists and compatibility is verified.
 3. A reviewed package patch with recursion-depth guards could mitigate the parser, but it adds security-sensitive maintenance responsibility. It is not adopted here.
 4. Replacing the lint configuration to remove this dependency chain requires deliberately preserving Next, React, accessibility, and TypeScript lint coverage. That is a tooling change for separate approval, not an automatic audit fix.

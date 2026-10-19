@@ -1,6 +1,13 @@
 export type PublicUrl = `https://${string}`;
 export type LocalAsset = `/${string}`;
 
+export interface ProfilePhotoConfig {
+  src: LocalAsset;
+  alt: string;
+  width: number;
+  height: number;
+}
+
 export interface Project {
   slug: string;
   title: string;

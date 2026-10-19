@@ -8,6 +8,8 @@ const captureRoot = `artifacts/phase-4/${stage}`;
 for (const width of [320, 375, 768, 1024, 1440]) {
   for (const theme of ['light', 'dark'] as const) {
     test(`visual review at ${width}px in ${theme} mode`, async ({ page }) => {
+      // This batch captures five full pages and diagrams; Windows WebKit rasterization is slow.
+      test.setTimeout(90000);
       await page.setViewportSize({ width, height: 1000 });
       await page.emulateMedia({ colorScheme: theme, reducedMotion: 'reduce' });
       await mkdir(captureRoot, { recursive: true });
@@ -95,7 +97,12 @@ for (const width of [320, 375, 768, 1024, 1440]) {
 
 test('mobile menu supports keyboard dismissal, resize focus, and the projects link without a hash', async ({
   page,
+  browserName,
 }) => {
+  test.skip(
+    browserName === 'webkit' && process.platform === 'win32',
+    'Windows WebKit skips native links during Tab navigation, reproduced in a minimal HTML document; verify on Safari with full keyboard navigation.',
+  );
   await page.setViewportSize({ width: 375, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/projects/hexpilot');
@@ -103,6 +110,8 @@ test('mobile menu supports keyboard dismissal, resize focus, and the projects li
   page.on('pageerror', (error) => errors.push(error.message));
   const menu = page.getByRole('button', { name: 'Open navigation menu' });
   await menu.click();
+  // WebKit does not focus buttons on pointer click; begin the keyboard path explicitly.
+  await page.getByRole('button', { name: 'Close navigation menu' }).focus();
   const mobile = page.getByRole('navigation', { name: 'Mobile navigation' });
   await page.keyboard.press('Tab');
   await expect(mobile.getByRole('link', { name: 'Experience' })).toBeFocused();
@@ -133,7 +142,12 @@ test('mobile menu supports keyboard dismissal, resize focus, and the projects li
 
 test('smooth anchors, active navigation, and card focus respect motion preference', async ({
   page,
+  browserName,
 }) => {
+  test.skip(
+    browserName === 'webkit' && process.platform === 'win32',
+    'Windows WebKit skips native links during Tab navigation; the Tab round trip requires a browser with full keyboard navigation.',
+  );
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.emulateMedia({
     reducedMotion: 'no-preference',

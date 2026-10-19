@@ -8,6 +8,8 @@ for (const width of [375, 768, 1440]) {
   test(`projects listing and all case studies work at ${width}px`, async ({
     page,
   }) => {
+    // Three MDX routes, their anchor links, and full-page captures share this test.
+    test.setTimeout(90000);
     await page.setViewportSize({ width, height: 1000 });
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
@@ -42,7 +44,10 @@ for (const width of [375, 768, 1440]) {
       )
         await expect(page.locator('.architecture-figure')).toBeVisible();
       await expect(
-        page.getByRole('link', { name: 'Live demo', exact: true }),
+        page.getByRole('link', {
+          name: 'Live Demo (opens in a new tab)',
+          exact: true,
+        }),
       ).toHaveCount(project.demoUrl ? 1 : 0);
       await expect(
         page.getByRole('link', { name: 'Source code', exact: true }),
